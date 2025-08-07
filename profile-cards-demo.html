@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card App - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            align-items: stretch;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            transition: border-color 0.3s ease;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .avatar-1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .avatar-2 {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        .avatar-3 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .avatar-4 {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        .profile-card:hover .avatar {
+            border-color: rgba(102, 126, 234, 0.6);
+            transform: scale(1.05);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-title {
+            font-size: 1.1rem;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .profile-body {
+            text-align: left;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-bio {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .skills-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-title {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .social-links {
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            padding-top: 1rem;
+        }
+
+        .social-title {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: fit-content;
+            justify-content: center;
+        }
+
+        .social-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .social-icon {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-card-list {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .header-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 1.5rem;
+            }
+            
+            .profile-name {
+                font-size: 1.3rem;
+            }
+            
+            .profile-title {
+                font-size: 1rem;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+            }
+            
+            .social-link {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">Profile Cards</h1>
+            <p class="header-subtitle">Meet our amazing team members</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="profile-card-list">
+            <!-- Profile Card 1 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar avatar-1">AK</div>
+                    <div class="profile-info">
+                        <h3 class="profile-name">Ayesha Khan</h3>
+                        <p class="profile-title">Frontend Developer</p>
+                        <p class="profile-location">📍 Karachi, Pakistan</p>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <p class="profile-bio">Passionate about creating beautiful and functional user interfaces. Love working with React and modern CSS.</p>
+                    
+                    <div class="skills-section">
+                        <h4 class="skills-title">Skills</h4>
+                        <div class="skills-container">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">HTML</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="social-title">Connect</h4>
+                        <div class="social-buttons">
+                            <a href="https://www.linkedin.com/" target="_blank" class="social-link">
+                                <span class="social-icon">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/ayeshakhan" target="_blank" class="social-link">
+                                <span class="social-icon">🐙</span>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://twitter.com/ayeshakhan" target="_blank" class="social-link">
+                                <span class="social-icon">🐦</span>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Card 2 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar avatar-2">AA</div>
+                    <div class="profile-info">
+                        <h3 class="profile-name">Ahmad Ali</h3>
+                        <p class="profile-title">Full Stack Developer</p>
+                        <p class="profile-location">📍 Lahore, Pakistan</p>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <p class="profile-bio">Building scalable web applications with modern technologies. Enthusiast of clean code and agile methodologies.</p>
+                    
+                    <div class="skills-section">
+                        <h4 class="skills-title">Skills</h4>
+                        <div class="skills-container">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Express</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="social-title">Connect</h4>
+                        <div class="social-buttons">
+                            <a href="https://www.linkedin.com/" target="_blank" class="social-link">
+                                <span class="social-icon">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/ahmadali" target="_blank" class="social-link">
+                                <span class="social-icon">🐙</span>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://twitter.com/ahmadali" target="_blank" class="social-link">
+                                <span class="social-icon">🐦</span>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Card 3 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar avatar-3">FS</div>
+                    <div class="profile-info">
+                        <h3 class="profile-name">Fatima Sheikh</h3>
+                        <p class="profile-title">UI/UX Designer</p>
+                        <p class="profile-location">📍 Islamabad, Pakistan</p>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <p class="profile-bio">Creating intuitive and delightful user experiences. Passionate about user research and design systems.</p>
+                    
+                    <div class="skills-section">
+                        <h4 class="skills-title">Skills</h4>
+                        <div class="skills-container">
+                            <span class="skill-tag">Figma</span>
+                            <span class="skill-tag">Adobe XD</span>
+                            <span class="skill-tag">Prototyping</span>
+                            <span class="skill-tag">User Research</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="social-title">Connect</h4>
+                        <div class="social-buttons">
+                            <a href="https://www.linkedin.com/" target="_blank" class="social-link">
+                                <span class="social-icon">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/fatimasheikh" target="_blank" class="social-link">
+                                <span class="social-icon">🐙</span>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://twitter.com/fatimasheikh" target="_blank" class="social-link">
+                                <span class="social-icon">🐦</span>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Card 4 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar avatar-4">HA</div>
+                    <div class="profile-info">
+                        <h3 class="profile-name">Hassan Ahmed</h3>
+                        <p class="profile-title">Backend Developer</p>
+                        <p class="profile-location">📍 Peshawar, Pakistan</p>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <p class="profile-bio">Specialized in building robust APIs and microservices. Love working with cloud technologies and DevOps.</p>
+                    
+                    <div class="skills-section">
+                        <h4 class="skills-title">Skills</h4>
+                        <div class="skills-container">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Docker</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="social-title">Connect</h4>
+                        <div class="social-buttons">
+                            <a href="https://www.linkedin.com/" target="_blank" class="social-link">
+                                <span class="social-icon">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/hassanahmed" target="_blank" class="social-link">
+                                <span class="social-icon">🐙</span>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://twitter.com/hassanahmed" target="_blank" class="social-link">
+                                <span class="social-icon">🐦</span>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
