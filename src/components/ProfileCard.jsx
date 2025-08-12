@@ -3,11 +3,11 @@ import SkillTag from './SkillTag';
 import SocialLinks from './SocialLinks';
 import './ProfileCard.css';
 
-function ProfileCard({ profile }) {
+function ProfileCard({ profile, theme }) {
   const { name, title, location, bio, avatar, skills, social } = profile;
-
+  const themeClass = theme ? `card-theme-${theme}` : "";
   return (
-    <div className="profile-card">
+    <div className={`profile-card ${themeClass}`}>
       <div className="profile-header">
         <div className="avatar-container">
           <img 

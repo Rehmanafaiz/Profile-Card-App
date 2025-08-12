@@ -5,11 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Card App - Demo</title>
     <style>
+        /* Dark Mode Toggle */
+        .dark-toggle {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            background: #fff;
+            color: #333;
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 10001;
+        }
+        body.dark {
+            background: linear-gradient(135deg, #18181b 0%, #232526 100%);
+        }
+        body.dark .profile-card {
+            background: rgba(30, 32, 38, 0.98);
+            color: #f3f4f6;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.32);
+        }
+        body.dark .profile-title, body.dark .skills-title, body.dark .social-title {
+            color: #38b2ac;
+        }
+        body.dark .profile-badge {
+            background: #ed8936;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(237,137,54,0.22);
+        }
+        body.dark .profile-card.card-theme-purple .profile-badge {
+            background: #8f5fe8;
+        }
+        body.dark .profile-card.card-theme-green .profile-badge {
+            background: #38b2ac;
+        }
+        body.dark .profile-card.card-theme-blue .profile-badge {
+            background: #667eea;
+        }
+        body.dark .skill-tag {
+            background: #232526;
+            color: #67e8f9;
+            border: 1px solid #38b2ac;
+        }
+        body.dark .skill-tag[data-tooltip]:hover:after {
+            background: #8f5fe8;
+            color: #fff;
+        }
+        body.dark .contact-btn, body.dark .close-btn {
+            background: #ed8936;
+            color: #fff;
+        }
+        body.dark .contact-btn:hover, body.dark .close-btn:hover {
+            background: #38b2ac;
+        }
+        body.dark .whatsapp-btn {
+            background: #25d366;
+            color: #18181b;
+        }
+        body.dark .whatsapp-btn:hover {
+            background: #128c7e;
+            color: #fff;
+        }
+        /* Card Hover Animation */
+        .profile-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+        }
+        /* Profile Badge */
+        .profile-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: #ed8936;
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(237,137,54,0.12);
+            z-index: 2;
+        }
+        .profile-card.card-theme-purple .profile-badge {
+            background: #8f5fe8;
+        }
+        .profile-card.card-theme-green .profile-badge {
+            background: #38b2ac;
+        }
+        .profile-card.card-theme-blue .profile-badge {
+            background: #667eea;
+        }
+        /* Social Icon Color Change */
+        .social-link .social-icon {
+            transition: color 0.3s;
+        }
+        .social-link:hover .social-icon {
+            color: #ed8936;
+        }
+        /* Skill Tooltip */
+        .skill-tag {
+            position: relative;
+        }
+        .skill-tag[data-tooltip]:hover:after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            top: -32px;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.18);
+            z-index: 10;
+        }
+        /* Copy Button */
+        .copy-btn {
+            margin-left: 0.5rem;
+            padding: 0.2rem 0.7rem;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #ed8936;
+        }
+        .copy-btn:active {
+            background: #38b2ac;
+        }
+        .whatsapp-btn {
+            margin-top: 0.8rem;
+            padding: 0.5rem 1.2rem;
+            background: #25d366;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(37,211,102,0.12);
+            transition: background 0.3s;
+        }
+        .whatsapp-btn:hover {
+            background: #128c7e;
+        }
+        .whatsapp-icon {
+            font-size: 1.2rem;
+        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+            /* Contact Button */
+            .contact-btn {
+                margin-top: 1rem;
+                padding: 0.6rem 1.2rem;
+                background: linear-gradient(90deg, #667eea, #8f5fe8);
+                color: #fff;
+                border: none;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(102,126,234,0.12);
+                transition: background 0.3s, transform 0.2s;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .contact-btn:hover {
+                background: linear-gradient(90deg, #38b2ac, #ed8936);
+                transform: scale(1.05);
+            }
+
+            /* Modal Popup (CSS-only) */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 9999;
+                left: 0;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0,0,0,0.4);
+                justify-content: center;
+                align-items: center;
+            }
+            .modal:target {
+                display: flex;
+            }
+            .modal-content {
+                background: #fff;
+                padding: 2rem 2.5rem;
+                border-radius: 18px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+                text-align: center;
+                min-width: 280px;
+            }
+            .close-btn {
+                margin-top: 1.2rem;
+                padding: 0.5rem 1.2rem;
+                background: #667eea;
+                color: #fff;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .close-btn:hover {
+                background: #ed8936;
+            }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -66,6 +285,24 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Card Theme Colors */
+        .card-theme-blue {
+            border: 2px solid #667eea;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        }
+        .card-theme-purple {
+            border: 2px solid #8f5fe8;
+            box-shadow: 0 8px 32px rgba(143, 95, 232, 0.15);
+        }
+        .card-theme-green {
+            border: 2px solid #38b2ac;
+            box-shadow: 0 8px 32px rgba(56, 178, 172, 0.15);
+        }
+        .card-theme-orange {
+            border: 2px solid #ed8936;
+            box-shadow: 0 8px 32px rgba(237, 137, 54, 0.15);
         }
 
         .profile-card:hover {
@@ -169,19 +406,20 @@
 
         .skill-tag {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            background: #f3f4f6;
+            color: #667eea;
+            border-radius: 12px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.9rem;
+            margin: 0.15rem 0.25rem 0.15rem 0;
             font-weight: 500;
-            transition: all 0.3s ease;
+            box-shadow: 0 1px 4px rgba(102,126,234,0.08);
             cursor: default;
         }
 
         .skill-tag:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.18);
         }
 
         .social-links {
@@ -266,6 +504,7 @@
     </style>
 </head>
 <body>
+    <button class="dark-toggle" onclick="document.body.classList.toggle('dark')">Toggle Dark Mode</button>
     <!-- Header -->
     <header class="header">
         <div class="header-content">
@@ -278,7 +517,8 @@
     <main class="main-content">
         <div class="profile-card-list">
             <!-- Profile Card 1 -->
-            <div class="profile-card">
+            <div class="profile-card card-theme-blue">
+                <span class="profile-badge">Top Performer</span>
                 <div class="profile-header">
                     <div class="avatar avatar-1">AK</div>
                     <div class="profile-info">
@@ -294,11 +534,12 @@
                     <div class="skills-section">
                         <h4 class="skills-title">Skills</h4>
                         <div class="skills-container">
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">CSS</span>
-                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag" data-tooltip="React: UI Library">React</span>
+                            <span class="skill-tag" data-tooltip="JavaScript: Programming Language">JavaScript</span>
+                            <span class="skill-tag" data-tooltip="CSS: Styling">CSS</span>
+                            <span class="skill-tag" data-tooltip="HTML: Markup">HTML</span>
                         </div>
+                                                    <a href="#modal-contact-1" class="contact-btn">Contact</a>
                     </div>
                     
                     <div class="social-links">
@@ -320,9 +561,20 @@
                     </div>
                 </div>
             </div>
+                            <!-- Modal for Card 1 -->
+                            <div id="modal-contact-1" class="modal">
+                                <div class="modal-content">
+                                    <h3>Contact Ayesha Khan</h3>
+                                    <p>Email: ayesha.khan@email.com <button class="copy-btn" onclick="navigator.clipboard.writeText('ayesha.khan@email.com')">Copy</button></p>
+                                    <p>Phone: +92 300 1234567 <button class="copy-btn" onclick="navigator.clipboard.writeText('+92 300 1234567')">Copy</button></p>
+                                    <a href="https://wa.me/923001234567" target="_blank" class="whatsapp-btn"><span class="whatsapp-icon">&#x1F4F1;</span> WhatsApp</a>
+                                    <a href="#" class="close-btn">Close</a>
+                                </div>
+                            </div>
 
             <!-- Profile Card 2 -->
-            <div class="profile-card">
+            <div class="profile-card card-theme-purple">
+                <span class="profile-badge">Team Lead</span>
                 <div class="profile-header">
                     <div class="avatar avatar-2">AA</div>
                     <div class="profile-info">
@@ -338,11 +590,12 @@
                     <div class="skills-section">
                         <h4 class="skills-title">Skills</h4>
                         <div class="skills-container">
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">MongoDB</span>
-                            <span class="skill-tag">Express</span>
+                            <span class="skill-tag" data-tooltip="Node.js: Backend JS Runtime">Node.js</span>
+                            <span class="skill-tag" data-tooltip="React: UI Library">React</span>
+                            <span class="skill-tag" data-tooltip="MongoDB: NoSQL Database">MongoDB</span>
+                            <span class="skill-tag" data-tooltip="Express: Node.js Framework">Express</span>
                         </div>
+                                                    <a href="#modal-contact-2" class="contact-btn">Contact</a>
                     </div>
                     
                     <div class="social-links">
@@ -364,9 +617,20 @@
                     </div>
                 </div>
             </div>
+                            <!-- Modal for Card 2 -->
+                            <div id="modal-contact-2" class="modal">
+                                <div class="modal-content">
+                                    <h3>Contact Ahmad Ali</h3>
+                                    <p>Email: ahmad.ali@email.com <button class="copy-btn" onclick="navigator.clipboard.writeText('ahmad.ali@email.com')">Copy</button></p>
+                                    <p>Phone: +92 301 2345678 <button class="copy-btn" onclick="navigator.clipboard.writeText('+92 301 2345678')">Copy</button></p>
+                                    <a href="https://wa.me/923012345678" target="_blank" class="whatsapp-btn"><span class="whatsapp-icon">&#x1F4F1;</span> WhatsApp</a>
+                                    <a href="#" class="close-btn">Close</a>
+                                </div>
+                            </div>
 
             <!-- Profile Card 3 -->
-            <div class="profile-card">
+            <div class="profile-card card-theme-green">
+                <span class="profile-badge">New</span>
                 <div class="profile-header">
                     <div class="avatar avatar-3">FS</div>
                     <div class="profile-info">
@@ -382,11 +646,12 @@
                     <div class="skills-section">
                         <h4 class="skills-title">Skills</h4>
                         <div class="skills-container">
-                            <span class="skill-tag">Figma</span>
-                            <span class="skill-tag">Adobe XD</span>
-                            <span class="skill-tag">Prototyping</span>
-                            <span class="skill-tag">User Research</span>
+                            <span class="skill-tag" data-tooltip="Figma: Design Tool">Figma</span>
+                            <span class="skill-tag" data-tooltip="Adobe XD: Design Tool">Adobe XD</span>
+                            <span class="skill-tag" data-tooltip="Prototyping: Design Process">Prototyping</span>
+                            <span class="skill-tag" data-tooltip="User Research: UX Process">User Research</span>
                         </div>
+                                                    <a href="#modal-contact-3" class="contact-btn">Contact</a>
                     </div>
                     
                     <div class="social-links">
@@ -408,9 +673,20 @@
                     </div>
                 </div>
             </div>
+                            <!-- Modal for Card 3 -->
+                            <div id="modal-contact-3" class="modal">
+                                <div class="modal-content">
+                                    <h3>Contact Fatima Sheikh</h3>
+                                    <p>Email: fatima.sheikh@email.com <button class="copy-btn" onclick="navigator.clipboard.writeText('fatima.sheikh@email.com')">Copy</button></p>
+                                    <p>Phone: +92 302 3456789 <button class="copy-btn" onclick="navigator.clipboard.writeText('+92 302 3456789')">Copy</button></p>
+                                    <a href="https://wa.me/923023456789" target="_blank" class="whatsapp-btn"><span class="whatsapp-icon">&#x1F4F1;</span> WhatsApp</a>
+                                    <a href="#" class="close-btn">Close</a>
+                                </div>
+                            </div>
 
             <!-- Profile Card 4 -->
-            <div class="profile-card">
+            <div class="profile-card card-theme-orange">
+                <span class="profile-badge">Senior Dev</span>
                 <div class="profile-header">
                     <div class="avatar avatar-4">HA</div>
                     <div class="profile-info">
@@ -426,11 +702,12 @@
                     <div class="skills-section">
                         <h4 class="skills-title">Skills</h4>
                         <div class="skills-container">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Django</span>
-                            <span class="skill-tag">AWS</span>
-                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag" data-tooltip="Python: Programming Language">Python</span>
+                            <span class="skill-tag" data-tooltip="Django: Python Framework">Django</span>
+                            <span class="skill-tag" data-tooltip="AWS: Cloud Platform">AWS</span>
+                            <span class="skill-tag" data-tooltip="Docker: Containerization">Docker</span>
                         </div>
+                                                    <a href="#modal-contact-4" class="contact-btn">Contact</a>
                     </div>
                     
                     <div class="social-links">
@@ -452,7 +729,47 @@
                     </div>
                 </div>
             </div>
+                            <!-- Modal for Card 4 -->
+                            <div id="modal-contact-4" class="modal">
+                                <div class="modal-content">
+                                    <h3>Contact Hassan Ahmed</h3>
+                                    <p>Email: hassan.ahmed@email.com <button class="copy-btn" onclick="navigator.clipboard.writeText('hassan.ahmed@email.com')">Copy</button></p>
+                                    <p>Phone: +92 303 4567890 <button class="copy-btn" onclick="navigator.clipboard.writeText('+92 303 4567890')">Copy</button></p>
+                                    <a href="https://wa.me/923034567890" target="_blank" class="whatsapp-btn"><span class="whatsapp-icon">&#x1F4F1;</span> WhatsApp</a>
+                                    <a href="#" class="close-btn">Close</a>
+                                </div>
+                            </div>
         </div>
     </main>
+</body>
+<!-- Modal Popups for Contact -->
+<div id="modal-contact-1" class="modal">
+    <div class="modal-content">
+        <h3>Contact Ayesha Khan</h3>
+        <p>Email: ayesha.khan@email.com</p>
+        <a href="#" class="close-btn">Close</a>
+    </div>
+</div>
+<div id="modal-contact-2" class="modal">
+    <div class="modal-content">
+        <h3>Contact Ahmad Ali</h3>
+        <p>Email: ahmad.ali@email.com</p>
+        <a href="#" class="close-btn">Close</a>
+    </div>
+</div>
+<div id="modal-contact-3" class="modal">
+    <div class="modal-content">
+        <h3>Contact Fatima Sheikh</h3>
+        <p>Email: fatima.sheikh@email.com</p>
+        <a href="#" class="close-btn">Close</a>
+    </div>
+</div>
+<div id="modal-contact-4" class="modal">
+    <div class="modal-content">
+        <h3>Contact Hassan Ahmed</h3>
+        <p>Email: hassan.ahmed@email.com</p>
+        <a href="#" class="close-btn">Close</a>
+    </div>
+</div>
 </body>
 </html>

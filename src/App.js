@@ -17,7 +17,8 @@ const profilesData = [
       linkedin: "https://www.linkedin.com/",
       github: "https://github.com/ayeshakhan",
       twitter: "https://twitter.com/ayeshakhan"
-    }
+    },
+    theme: "blue"
   },
   {
     id: 2,
@@ -31,7 +32,8 @@ const profilesData = [
       linkedin: "https://www.linkedin.com/",
       github: "https://github.com/ahmadali",
       twitter: "https://twitter.com/ahmadali"
-    }
+    },
+    theme: "purple"
   },
   {
     id: 3,
@@ -45,7 +47,8 @@ const profilesData = [
       linkedin: "https://www.linkedin.com/",
       github: "https://github.com/fatimasheikh",
       twitter: "https://twitter.com/fatimasheikh"
-    }
+    },
+    theme: "green"
   },
   {
     id: 4,
@@ -59,7 +62,8 @@ const profilesData = [
       linkedin: "https://www.linkedin.com/",
       github: "https://github.com/hassanahmed",
       twitter: "https://twitter.com/hassanahmed"
-    }
+    },
+    theme: "orange"
   }
 ];
 
